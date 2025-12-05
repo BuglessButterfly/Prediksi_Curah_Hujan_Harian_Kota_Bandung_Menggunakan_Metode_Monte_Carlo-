@@ -1,0 +1,46 @@
+# ==== Python ====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ==== Virtual environments ====
+venv/
+.venv/
+env/
+ENV/
+virtualenv/
+.python-version
+
+# ==== Jupyter / IPython ====
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# ==== OS / Editor junk ====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ==== Flask specific ====
+instance/
+*.log
+.env
+.flaskenv
+
+# ==== Optional: local runtime files ====
+*.sqlite3
+*.db
