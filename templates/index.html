@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi Prediksi Curah Hujan Kota Bandung - Monte Carlo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Simulasi Prediksi Curah Hujan Harian Kota Bandung</h1>
+        <p>Menggunakan Metode Monte Carlo Berdasarkan Data Curah Hujan Open Data Bandung</p>
+    </div>
+    
+    <div class="container">
+        
+        <h2>Pengaturan Simulasi</h2>
+        <div class="form-simulasi">
+            <form method="POST" action="/">
+                <label for="num_simulations">Jumlah Simulasi (N):</label>
+                <input type="number" id="num_simulations" name="num_simulations" 
+                       value="{{ results.num_simulations }}" min="1" max="1000" required>
+                
+                <button type="submit">
+                    Jalankan Prediksi
+                </button>
+                <small style="margin-left: 20px;">
+                    *Menggunakan {{ results.num_simulations }} iterasi simulasi
+                </small>
+            </form>
+        </div>
+
+        <hr> 
+        
+        <!-- =================================================== -->
+        <!-- TABEL INTERVAL PROBABILITAS (PER TAHUN)             -->
+        <!-- =================================================== -->
+        <h2>Tabel Interval Probabilitas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tahun</th>
+                    <th>Total Curah Hujan (mm/tahun)</th>
+                    <th>Probabilitas</th>
+                    <th>Kumulatif</th>
+                    <th>Interval (000-999)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results.interval_table %}
+                <tr>
+                    <td>{{ row.Tahun }}</td>
+                    <td>{{ row['Jumlah Curah Hujan'] | format_ribuan }}</td>
+                    <td>{{ row.Probabilitas }}</td>
+                    <td>{{ row.Kumulatif }}</td>
+                    <td>{{ row.Interval }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+
+        <!-- =================================================== -->
+        <!-- HASIL SIMULASI MONTE CARLO                          -->
+        <!-- =================================================== -->
+        <h2>Hasil Simulasi Angka Acak (N={{ results.num_simulations }})</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Angka Acak (000-999)</th>
+                    <th>Prediksi Curah Hujan Tahunan (mm)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results.simulation_results %}
+                <tr>
+                    <td>{{ row['No.'] }}</td>
+                    <td>{{ row['Angka Acak'] }}</td>
+                    <td>{{ row.Prediksi | format_ribuan }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+
+        <!-- =================================================== -->
+        <!-- HASIL PREDIKSI AKHIR                                -->
+        <!-- =================================================== -->
+        <div class="prediction-result">
+            Prediksi Total Curah Hujan Tahunan Kota Bandung di Tahun Berikutnya Adalah:
+            <strong data-value="{{ results.final_prediction }}" data-suffix=" mm/tahun">
+                {{ results.final_prediction | format_ribuan }} mm/tahun
+            </strong>
+            <p style="margin-top:8px; font-size:0.95em; opacity:0.85;">
+                *Perkiraan curah hujan harian rata-rata dapat dihitung dari hasil tahunan dibagi jumlah hari (±365 hari).
+            </p>
+        </div>
+        
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

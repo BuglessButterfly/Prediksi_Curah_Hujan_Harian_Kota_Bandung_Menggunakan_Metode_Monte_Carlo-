@@ -1,0 +1,290 @@
+/* =========================================================
+   Cloudy Rain Theme CSS – Bandung Rainfall Monte Carlo
+   Warna awan/mendung + form rapi
+   ========================================================= */
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  /* Cloud / overcast palette */
+  --cloud-dark: #2b2d42;     /* awan gelap */
+  --cloud-mid:  #6c757d;     /* awan sedang */
+  --cloud-soft: #adb5bd;     /* awan terang */
+  --mist:       #e9ecef;     /* kabut */
+  --rain-blue:  #4a90e2;     /* biru hujan lembut */
+  --rain-deep:  #2f5fa3;     /* biru mendung */
+
+  --success-color:#2f9e44;
+  --success-dark:#237a36;
+
+  --card-bg: rgba(255,255,255,0.97);
+  --text-primary:#1f2937;
+  --text-secondary:#6b7280;
+  --border:rgba(31,41,55,0.10);
+
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:0 8px 20px rgba(0,0,0,0.12);
+  --shadow-lg:0 20px 45px rgba(0,0,0,0.18);
+
+  --transition:all .25s ease;
+}
+
+body{
+  font-family:"Segoe UI",system-ui,sans-serif;
+  color:var(--text-primary);
+  line-height:1.6;
+  min-height:100vh;
+  background:
+    radial-gradient(1100px circle at 15% -10%, rgba(233,236,239,0.45), transparent 60%),
+    radial-gradient(900px circle at 85% 0%, rgba(173,181,189,0.35), transparent 60%),
+    linear-gradient(180deg, #0f172a, #1f2937, #111827);
+  background-attachment:fixed;
+  padding-bottom:40px;
+}
+
+/* =========================
+   HEADER (Cloudy Sky)
+   ========================= */
+.header{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  color:#fff;
+  padding:34px 0;
+  background:
+    linear-gradient(135deg, var(--cloud-dark) 0%, var(--rain-deep) 45%, var(--cloud-mid) 100%);
+  box-shadow:var(--shadow-lg);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+/* drizzle shimmer */
+.header::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    repeating-linear-gradient(
+      120deg,
+      rgba(255,255,255,0.08) 0px,
+      rgba(255,255,255,0.08) 2px,
+      transparent 2px,
+      transparent 12px
+    );
+  animation:rainMove 6s linear infinite;
+  opacity:.35;
+}
+@keyframes rainMove{
+  from{transform:translateY(-20%) translateX(-8%);}
+  to{transform:translateY(20%) translateX(8%);}
+}
+
+.header h1{
+  font-size:2.2em;
+  font-weight:800;
+  text-shadow:0 8px 20px rgba(0,0,0,0.45);
+  position:relative;z-index:1;
+}
+.header p{
+  margin-top:8px;
+  font-size:1.05em;
+  opacity:.95;
+  position:relative;z-index:1;
+}
+
+/* =========================
+   CONTAINER
+   ========================= */
+.container{
+  max-width:92%;
+  width:1200px;
+  margin:26px auto;
+  background:var(--card-bg);
+  padding:38px 40px;
+  border-radius:18px;
+  box-shadow:var(--shadow-lg);
+  border:1px solid rgba(255,255,255,0.7);
+  backdrop-filter:blur(8px);
+  animation:fadeIn .6s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* =========================
+   TYPOGRAPHY
+   ========================= */
+h2{
+  margin-top:34px;margin-bottom:16px;
+  font-size:1.55em;font-weight:800;
+  color:var(--cloud-dark);
+  display:flex;align-items:center;gap:10px;
+  padding-bottom:8px;
+  border-bottom:2px dashed rgba(108,117,125,0.6);
+}
+h2::before{
+  content:"";
+  width:8px;height:22px;border-radius:999px;
+  background:linear-gradient(180deg, var(--cloud-soft), var(--rain-blue));
+  box-shadow:0 0 7px rgba(173,181,189,0.9);
+}
+hr{
+  border:none;border-top:1px solid var(--border);
+  margin:24px 0;opacity:.9;
+}
+
+/* =========================
+   FORM (Cloud panel rapi grid)
+   ========================= */
+.form-simulasi{
+  background:
+    linear-gradient(135deg, var(--mist) 0%, #f8f9fa 60%, #eef2f6 100%);
+  padding:20px;border-radius:14px;
+  box-shadow:var(--shadow-md);
+  border:1px solid rgba(108,117,125,0.25);
+  transition:var(--transition);
+}
+.form-simulasi:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(108,117,125,0.25);
+}
+
+.form-simulasi form{
+  display:grid;
+  grid-template-columns:auto 140px auto 1fr;
+  align-items:center;
+  gap:12px 14px;
+}
+
+.form-simulasi label{
+  font-size:1.05em;font-weight:800;color:var(--cloud-dark);
+}
+
+.form-simulasi input[type="number"]{
+  width:140px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:2px solid rgba(108,117,125,0.25);
+  text-align:center;
+  font-size:1em;font-weight:800;
+  background:#fff;
+  transition:var(--transition);
+  outline:none;
+}
+.form-simulasi input[type="number"]:focus{
+  border-color:var(--rain-blue);
+  box-shadow:0 0 0 4px rgba(74,144,226,0.22);
+  transform:scale(1.03);
+}
+
+.form-simulasi button{
+  justify-self:start;
+  border:none;cursor:pointer;
+  padding:11px 26px;border-radius:10px;
+  font-size:1em;font-weight:800;color:#fff;
+  background:linear-gradient(135deg, var(--rain-blue), var(--rain-deep));
+  box-shadow:var(--shadow-md);
+  transition:var(--transition);
+  position:relative;overflow:hidden;
+  min-width:170px;
+  text-align:center;
+}
+.form-simulasi button::after{
+  content:"";
+  position:absolute;inset:0;
+  background:radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 60%);
+  opacity:0;transition:var(--transition);
+}
+.form-simulasi button:hover::after{opacity:1;}
+.form-simulasi button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 26px rgba(74,144,226,0.5);
+}
+
+.form-simulasi small{
+  color:var(--cloud-dark);opacity:.7;font-style:italic;
+}
+
+/* =========================
+   TABLE (Cloud glass)
+   ========================= */
+table{
+  width:100%;
+  border-collapse:separate;border-spacing:0;
+  background:#fff;
+  border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow-md);
+  border:1px solid var(--border);
+  margin-bottom:24px;
+}
+th,td{
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  text-align:right;
+}
+th{
+  text-align:center;color:#fff;font-weight:900;
+  font-size:.85em;letter-spacing:.6px;text-transform:uppercase;
+  background:linear-gradient(135deg, var(--cloud-dark), var(--rain-deep), var(--cloud-mid));
+  position:sticky;top:0;z-index:5;
+}
+th:first-child,td:first-child{text-align:center;}
+tr{transition:var(--transition);}
+tr:nth-child(even){background:#f8fafc;}
+tr:hover{
+  background:linear-gradient(90deg, rgba(233,236,239,0.9), rgba(74,144,226,0.08));
+  transform:translateY(-1px);
+}
+td{font-weight:600;color:#111827;}
+
+/* =========================
+   PREDICTION RESULT (Storm Cloud banner)
+   ========================= */
+.prediction-result{
+  margin-top:34px;text-align:center;color:#fff;
+  padding:26px;border-radius:14px;
+  box-shadow:var(--shadow-lg);
+  border:1px solid rgba(255,255,255,0.16);
+  background:
+    radial-gradient(800px circle at -20% -40%, rgba(255,255,255,0.10), transparent 60%),
+    linear-gradient(135deg, var(--cloud-dark) 0%, var(--rain-deep) 55%, var(--cloud-mid) 110%);
+}
+.prediction-result strong{
+  display:block;font-size:2.35em;font-weight:900;
+  margin-top:8px;text-shadow:0 8px 20px rgba(0,0,0,0.45);
+}
+
+/* Loading */
+.loading{
+  display:inline-block;width:18px;height:18px;
+  border:3px solid rgba(255,255,255,0.35);
+  border-radius:50%;border-top-color:#fff;
+  animation:spin 1s linear infinite;
+  margin-right:8px;vertical-align:middle;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width:768px){
+  .container{padding:20px;margin:14px auto;border-radius:14px;}
+  .header h1{font-size:1.6em;}
+  .header p{font-size:.9em;}
+  h2{font-size:1.25em;}
+
+  .form-simulasi form{
+    grid-template-columns:1fr;
+    align-items:stretch;
+  }
+  .form-simulasi input[type="number"],
+  .form-simulasi button{
+    width:100%;min-width:unset;justify-self:stretch;
+  }
+
+  table{font-size:.85em;}
+  th,td{padding:10px 8px;}
+  .prediction-result{font-size:1.03em;padding:20px;}
+  .prediction-result strong{font-size:1.8em;}
+}
+
+html{scroll-behavior:smooth;}
